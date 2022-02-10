@@ -1,0 +1,17 @@
+// const img_photos = "https://picsum.photos/id/355/345/345";
+// const img_photos2 = "https://picsum.photos/id/250/345/345";
+// const img_photos3 = "https://picsum.photos/id/319/345/345";
+// const img_photos4 = "https://picsum.photos/id/454/345/345";
+// const img_photos5 = "https://picsum.photos/id/531/345/345";
+// const img_photos6 = "https://picsum.photos/id/628/345/345";
+// const img_magasin = "https://picsum.photos/id/1059/345/345";
+// const img_cactus = "https://picsum.photos/id/248/345/345";
+// const img_plante = "https://picsum.photos/id/400/345/345";
+// const img_plante2 = "https://picsum.photos/id/530/345/345";
+// const img_plante3 = "https://picsum.photos/id/82/345/345";
+// const img_atelier = "https://picsum.photos/id/284/345/345";
+// const img_atelier2 = "https://picsum.photos/id/491/345/345";
+// const img_serigraphie = "https://picsum.photos/id/526/345/345";
+// const img_serigraphie2 = "https://picsum.photos/id/528/345/345";
+// const img_mode = "https://picsum.photos/id/535/345/345";
+// const img_mode2 = "https://picsum.photos/id/758/345/345";

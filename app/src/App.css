@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: "#fffcf7";
+}
+
+/* Pour les titres on prend une typo sherif */
+.title {
+  font-family: 'Bellefair', serif;
+}

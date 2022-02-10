@@ -1,0 +1,239 @@
+  const [nosArtisans, setNosArtisans] = useState(artisans);
+
+  useEffect(() => {
+    FiltreSecteurs(setNosArtisans);
+    SearchBar(setNosArtisans);}
+    , []);
+
+
+if(secteur !== '') {setNosArtisans(artisansFiltres);}
+
+ // FILTRE PAR MOT CLE 
+   const [mot, setMot] = useState();null
+
+ // MOT CLE DANS SEARCH BAR
+  function searchMot(obj) {
+    // Si le mot correspond au secteur / nom / localité
+    if (mot.length > 2 && (obj.Secteur.includes(mot) || obj.Nom.includes(mot) || obj['Localité'].includes(mot) )) {
+      return true;
+  }}
+
+  let resultSearch = artisans.filter(searchMot);
+  console.log(resultSearch);
+
+  if(mot !== "") {
+    setNosArtisans(resultSearch);
+  }
+
+
+   const loadMore = (event) => {
+    event.preventDefault();
+    console.log("works");
+  }
+
+
+  const userAuth = () => {
+    axios.get("http://localhost:4000/api/auth/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    }).then((response) => {
+      console.log(response)
+    }).catch((error) => 
+     console.log("Nope! " + error))
+  }
+
+
+
+
+  //// VIEUX CODE LESARTISANS
+
+  import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import '.././index.css';
+import Divider from '@mui/material/Divider';
+import Titre from './Titre';
+import Typography from '@mui/material/Typography';
+import FiltreSecteurs from './recherche/FiltreSecteurs';
+import SearchBar from './recherche/SearchBar';
+import Grid from '@mui/material/Grid';
+import FicheArtisan from './FicheArtisan';
+import { ArtisanContext } from '../context/ArtisanContext';
+
+// liste d'artisans via .json
+import artisans from '../data/artisans.json';
+
+
+function stringToColor(string) {
+    let hash = 0;
+    let i;
+  
+    /* eslint-disable no-bitwise */
+    for (i = 0; i < string.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+  
+    let color = '#';
+  
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff;
+      color += `00${value.toString(16)}`.substr(-2);
+    }
+    /* eslint-enable no-bitwise */
+  
+    return color;
+  }
+  
+  function stringAvatar(name) {
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: `${name.split(' ')[0][0]}`,
+    };
+  }
+
+
+export default function LesArtisans() {
+
+   // ARTISANS LISTE
+   const [nosArtisans, setNosArtisans] = useState(artisans);
+
+   // FILTRE PAR SECTEUR 
+  const [secteur, setSecteur] = useState('');
+ 
+   // FILTRE PAR MOT CLE 
+   const [mot, setMot] = useState('');
+
+
+   // SECTEUR FILTRE
+   function filtrerParSecteur(obj) {
+    // Si le secteur d'un objet du json correspond au secteur demandé
+    if (secteur !== '' && obj.Secteur.includes(secteur)) {
+      return true;
+  }};
+
+  //let resultFiltre = artisans.filter(filtrerParSecteur);
+  
+
+  
+
+
+  return <Box sx={{width:"100%", my:3}}>
+            {/** On donne aux titres une autre typo, donc un autre thème */}
+            <Titre titre="Découvrez nos artisans belges"  color="secondary" />
+            {/** Petit texte sur les artisans */}
+            <Typography sx={{my:2}} variant="subtitle1" gutterBottom component="div">
+            Ici vous trouverez tous les artisans belges répertoriés par le SPF Economie, vous pouvez filtrer votre recherche par secteur ou encore par région. Bonne visite!
+            </Typography>
+
+            {/** Ici tous les artisans avec la possibilité de filtrer par secteur ou par localité*/}
+            
+            <ArtisanContext.Provider value={{secteur, setSecteur, setMot}}>
+            <Box sx={{width:"100%"}}>
+                <Box sx={{display:"flex", justifyContent:"space-between", flexDirection:"row", mb:2}}>
+                    <FiltreSecteurs setSecteur={setSecteur} />
+                    <SearchBar />
+                </Box>
+                <Divider />
+                <Box sx={{ width: '100%', my:2 }}>
+                    <Grid container rowSpacing={{xs: 1, sm: 2, md: 3}} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{display:"flex", alignContent:"strech"}}>
+                        { nosArtisans.slice(0, 200).map(artisan => {
+                            return <Grid item xs={12} sm={12} md={6} lg={4} sx={{heigth:"100%"}}  key={artisan['Numéro d entreprise'] + artisan['Secteur']}>
+                                      <FicheArtisan path={artisan['Numéro d entreprise']} avatar={stringAvatar} nom={artisan['Nom']} name={artisan['Nom']} region={artisan['Localité']} secteur={artisan['Secteur']}/>
+                                    </Grid>})}
+                                        
+                    </Grid>
+                    <Grid container sx={{display:"flex", justifyContent:"center"}}>
+                      <Button color="primary" variant="contained" sx={{letterSpacing: 5, borderRadius:"0", fontWeight: "400", m:4}}>Voir plus</Button>
+                    </Grid>
+                </Box>
+            
+            </Box>
+            </ArtisanContext.Provider>
+        
+        </Box>;
+
+}
+
+// Fetch tous les users
+  axios.get('http://localhost:4000/api/users')
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+
+
+
+  // fetch tous les artisans 
+  let dataArtisans = [];
+
+  // Fetch tous les artisans
+  axios.get('http://localhost:4000/api/artisans')
+  .then(function (response) {
+    dataArtisans = response.data;
+    console.log(dataArtisans);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+  console.log(dataArtisans);
+
+
+  /// Ancien look détails artisan
+   {/** Infos artisan */}
+            <TableContainer>
+              <Table aria-label="details artisan">
+                <TableBody>
+                  {/** Secteur */}
+                <TableRow key={1} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      <TableCell component="th" scope="row">
+                        {<ClassIcon color="secondary"/>}
+                      </TableCell>
+                      <TableCell align="left">{props.secteur}</TableCell>
+                      
+                </TableRow>
+                {/** Adresse */}
+                <TableRow key={1} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      <TableCell component="th" scope="row">
+                        {<AddBusinessIcon color="secondary"/>}
+                      </TableCell>
+                      <TableCell align="left">{props.addresse + ", " + props.numero}<br/> {props.localite}</TableCell>
+                      
+                </TableRow>
+                {/** Téléphone */}
+                <TableRow key={1} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      <TableCell component="th" scope="row">
+                        {<PhoneIphoneIcon color="secondary"/>}
+                      </TableCell>
+                      <TableCell align="left">{props.numero}</TableCell>  
+                </TableRow>
+                {/** Email */}
+                <TableRow key={1} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      <TableCell component="th" scope="row">
+                        {<EmailIcon color="secondary"/>}
+                      </TableCell>
+                      <TableCell align="left">{props.email}</TableCell>     
+                </TableRow>
+                {/** Langue */}
+                <TableRow key={1} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      <TableCell component="th" scope="row">
+                        {<PublicIcon color="secondary"/>}
+                      </TableCell>
+                      <TableCell align="left">{props.langue}</TableCell>     
+                </TableRow>
+
+                </TableBody>
+              </Table>
+            </TableContainer>
+
+
+
+            
+// data
+{dayjs(new Date()).format('DD MM YYYY, hh:mm:ss A')}

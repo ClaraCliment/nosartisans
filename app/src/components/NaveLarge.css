@@ -1,0 +1,40 @@
+.nav {
+    padding: 10px;
+}
+
+.nav_list {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding:0;
+    margin:10px;
+    /* width: 100%; */
+}
+
+.nav_item {
+    padding: 6px;
+    margin: 4px;
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 2px;
+    font-size: 16px;
+    text-transform: uppercase;
+    list-style: none;
+}
+
+.nav_item:hover {
+    border-bottom: 1px solid #A3664F;
+    font-weight: 400;
+}
+
+.lien {
+    text-decoration: none;
+    color: #1E1F1C;
+}
+
+.lien:hover {
+   
+    color: #A3664F;
+}
