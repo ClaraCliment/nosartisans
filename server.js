@@ -48,6 +48,7 @@ server.on('listening', () => {
 });
 
 
+
 if (process.env.NODE_ENV === "production") {
   server.use(express.static(path.resolve(__dirname, './app/build')));
   server.get('*', function(request, response) {
