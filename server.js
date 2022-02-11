@@ -49,9 +49,11 @@ server.on('listening', () => {
 
 
 if (process.env.NODE_ENV === "production") {
-  app.use(espress.static(path.join(__dirname, './app/build')))
+  app.use(express.static(path.resolve(__dirname, './app/build')));
+  app.get('*', function(request, response) {
+    response.sendFile(path.resolve(__dirname, './app/build', 'index.html'));
+  });
 }
-
 
 server.listen(port,()=>{
   console.log(`server runnin at http://localhost:${port}`)
