@@ -49,8 +49,8 @@ server.on('listening', () => {
 
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.resolve(__dirname, './app/build')));
-  app.get('*', function(request, response) {
+  server.use(express.static(path.resolve(__dirname, './app/build')));
+  server.get('*', function(request, response) {
     response.sendFile(path.resolve(__dirname, './app/build', 'index.html'));
   });
 }
