@@ -10,7 +10,6 @@ import Connexion from "./pages/Connexion";
 import Lactu from "./pages/Lactu";
 import Admin from "./pages/Admin";
 import Profil from "./pages/Profil";
-import Deconnexion from "./components/Connexion/Deconnexion";
 import UserState from './context/UserState';
 import {useState} from 'react';
 
@@ -27,12 +26,10 @@ export default function App() {
         
           <Header />
           <Switch>
-
           <Route exact path="/" component={Home} />
           <Route path="/artisan:id" component={ArtisanDetails} />
           <Route exact path="/apropos" component={Apropos} />
           <Route exact path="/connexion" component={Connexion} />
-          <Route exact path="/deconnexion" component={Deconnexion} />
           <Route exact path="/lactu" component={Lactu} />
           <Route exact path="/admin" component={Admin} />
           <Route path="/profil" component={Profil} />

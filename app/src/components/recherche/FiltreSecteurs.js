@@ -6,13 +6,17 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 // import { ArtisanContext } from '../../context/ArtisanContext';
 
-export default function FiltreSecteurs() {
+export default function FiltreSecteurs({setSearch}) {
 
-  const [ secteur, setSecteur ] = useState("Tous");
-
+  const [actualValue, setActualValue] = useState("Tous");
+  
   const handleChange = (event) => {
-    setSecteur(event.target.value);
-    ;
+    setActualValue(event.target.value);
+    if(event.target.value === "Tous") {
+      setSearch("");
+    }else{
+      setSearch(`/secteur/${event.target.value}`);
+    }
   };
 
   return (
@@ -24,8 +28,9 @@ export default function FiltreSecteurs() {
           labelId="demo-simple-select-label"
           id="secteur"
           label="Secteur"
-          value ={secteur}
+          value ={actualValue}
           onChange={handleChange}
+          onClick={(e) =>  {e.preventDefault()}}
         >
           <MenuItem value={"Tous"}>Tous</MenuItem>
           <MenuItem value={"Produits alimentaires"}>Produits alimentaires</MenuItem>
@@ -34,8 +39,8 @@ export default function FiltreSecteurs() {
           <MenuItem value={"Arts graphiques"}>Arts graphiques</MenuItem>
           <MenuItem value={"Métaux"}>Métaux</MenuItem>
           <MenuItem value={"Ameublement et décoration d'intérieur"}>Ameublement et décoration d'intérieur</MenuItem>
-          <MenuItem value={"Produits de luxe: bijouterie, horlogerie et parfum"}>Produits de luxe: bijouterie, horlogerie et parfum</MenuItem>
-          <MenuItem value={"Construction, réparation et rénovation"}>Construction, réparation et rénovation</MenuItem>
+          <MenuItem value={"Produits de luxe : bijouterie, horlogerie et parfum"}>Produits de luxe : bijouterie, horlogerie et parfum</MenuItem>
+          <MenuItem value={"Construction, réparation, rénovation"}>Construction, réparation, rénovation</MenuItem>
           <MenuItem value={"Musique"}>Musique</MenuItem>
           <MenuItem value={"Céramique"}>Céramique</MenuItem>
           <MenuItem value={"Papier"}>Papier</MenuItem>
@@ -44,7 +49,7 @@ export default function FiltreSecteurs() {
           <MenuItem value={"Service aux personnes et aux animaux"}>Service aux personnes et aux animaux</MenuItem>
           <MenuItem value={"Fleurs et jardins"}>Fleurs et jardins</MenuItem>
           <MenuItem value={"Mécanique (Automobile et cycles)"}>Mécanique (Automobile et cycles)</MenuItem>
-          <MenuItem value={"Autres"}>Autres</MenuItem>
+          <MenuItem value={"autre"}>Autre</MenuItem>
         </Select>
       </FormControl>
     </Box>

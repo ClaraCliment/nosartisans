@@ -20,7 +20,6 @@ export default function Login() {
   const [helperEmail, setHelperEmail] = useState("");
 
   const history = useHistory();
-  const { setIsLogged, setIsAdmin } = useContext(UserState);
 
   let actualUser = "";
 
@@ -38,18 +37,17 @@ export default function Login() {
       password: password,
     }
 
-    axios.post(`${process.env.REACT_APP_API_URL}/users/signin`, data)
+    axios.post(`${process.env.REACT_APP_API_URL}/api/users/signin`, data)
   .then(function (response) {
-    console.log(response.data);    
-    setIsLogged(true);
-    history.push("/");
+    console.log(response);    
+    
+
   })
   .catch(function (error) {
     console.log(error);
     setHelperPass(
       "Le mot de passe ou l'adresse email est incorrect(e)."
     );
-    setIsLogged(false);
 
   });
 

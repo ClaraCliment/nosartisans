@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import '.././index.css';
@@ -49,14 +49,20 @@ function stringToColor(string) {
 
 export default function LesArtisans() {
 
-  const {data, loading, error } = useFetch(
-    `${process.env.REACT_APP_API_URL}/api/artisans`
-  );
+  const [ search, setSearch] = useState("");
+  let [ fetchedData, setFetchedData] = useState([]);
 
-  if (loading) return <Loading />;
+  let api = `${process.env.REACT_APP_API_URL}/api/artisans${search}`;
 
-  if (error) return <ErrorMessage />;
-
+  useEffect(() => {
+    // IIFE: immediately invoked function expression 
+    (async function(){
+      let data = await fetch(api)
+      .then(res => res.json());
+      console.log(data);
+      setFetchedData(data);
+    })()
+  }, [api])
   
 
   return <Box sx={{width:"100%", my:3}}>
@@ -69,17 +75,17 @@ export default function LesArtisans() {
 
             <Box sx={{width:"100%"}}>
                 <Box sx={{display:"flex", justifyContent:"space-between", flexDirection:"row", mb:2}}>
-                    <FiltreSecteurs />
-                    <SearchBar />
+                    <FiltreSecteurs setSearch={setSearch} />
+                    <SearchBar setSearch={setSearch}/>
                 </Box>
                 <Divider />
                 <Box sx={{ width: '100%', my:2 }}>
                     <Grid container rowSpacing={{xs: 1, sm: 2, md: 3}} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{display:"flex", alignContent:"strech"}}>
-                    { data ? 
-                      data.slice(0, 100).map(artisan => {
-                            return <Grid item xs={12} sm={12} md={6} lg={4} sx={{heigth:"100%"}}  key={artisan._id}>
-                                      <FicheArtisan id={artisan._id} path={artisan._id} avatar={stringAvatar} nom={artisan.Nom} name={artisan.Nom} region={artisan.Localite} secteur={artisan.Secteur}/>
-                                    </Grid>}) 
+                    { fetchedData !== [] ? 
+                      fetchedData.map((artisan) => (
+                            <Grid item xs={12} sm={12} md={6} lg={4} sx={{heigth:"100%"}}  key={artisan._id}>
+                                    <FicheArtisan id={artisan._id} path={artisan._id} avatar={stringAvatar} nom={artisan.Nom} name={artisan.Nom} region={artisan.Localite} secteur={artisan.Secteur}/>
+                                  </Grid>))
                       : <Typography>Ops, on a un soucis! </Typography>}
                                         
                     </Grid>

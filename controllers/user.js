@@ -55,7 +55,6 @@ exports.signin = async (req, res, next)=>{
         console.log("Id de l'user: ", user._id)
         console.log("User complet: ", user)
         console.log("User email: ", user.email)
-        console.log("User email: ", user.id)
         generateToken(user, 200, res);
 
     }
@@ -101,7 +100,7 @@ exports.logout = (req, res, next)=>{
 
 
 
-// USESR PROFILE 
+// USER PROFILE 
 exports.userProfile = async (req, res, next)=>{
 
     const user = await User.findById(req.user.id);
