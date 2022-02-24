@@ -33,12 +33,6 @@ export default function Inscription() {
   const handleNewsletter = () => {
     setChecked(!checked);    
   };
-  
-  // Le user est connecté?
-  const [loginStatus, setLoginStatus] = useState(false);
-
-  //const history = useHistory();
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -73,16 +67,10 @@ export default function Inscription() {
     }
   axios.post(`${process.env.REACT_APP_API_URL}/api/users/signup`,data)
   .then(function (response) {
-    if(!response.data.auth) {
-      setLoginStatus(false);
-    } else {
-      setLoginStatus(true);
-    }
-    //window.location = '/';
+    console.log(response)
   })
   .catch(function (error) {
     console.log(error);
-    setLoginStatus(false);
     setHelperEmail("Cet email est déjà employé. Veuillez vous connecter au lieu de vous inscrire.");
   });
   }

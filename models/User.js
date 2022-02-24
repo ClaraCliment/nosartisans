@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
+require('dotenv').config();
 
 // Valider l'email (format)
 const { isEmail } = require('validator')
@@ -63,7 +64,7 @@ userSchema.methods.comparePassword = async function(yourPassword){
 // get the token
 userSchema.methods.jwtGenerateToken = function(){
    return jwt.sign({id: this._id}, process.env.JWT_SECRET, {
-       expiresIn: 3600
+       expiresIn: "1h"
    });
 }
 

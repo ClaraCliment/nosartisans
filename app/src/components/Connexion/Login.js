@@ -1,14 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
-//import { useHistory } from "react-router-dom";
 import axios from "axios";
-import UserState from "../../context/UserState";
 
-export default function Login() {
+export default function Login( { setIsLogged, setIsAdmin, setUserFirstName } ) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,13 +36,15 @@ export default function Login() {
     }
 
     axios.post(`${process.env.REACT_APP_API_URL}/api/users/signin`, data)
-  .then(function (response) {
-    console.log(response);    
+  .then((response) => {
+    console.log(response.data.admin); 
     
-
-  })
+    
+  }
+  )
   .catch(function (error) {
     console.log(error);
+    setIsLogged(false);
     setHelperPass(
       "Le mot de passe ou l'adresse email est incorrect(e)."
     );

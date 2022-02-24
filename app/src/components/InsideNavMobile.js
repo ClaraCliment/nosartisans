@@ -10,12 +10,8 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import PersonIcon from '@mui/icons-material/Person';
-import UserState from '../context/UserState';
 
-
-export default function InsideNavMobile() {
-
-  const { isLogged, isAdmin } = useContext(UserState);
+export default function InsideNavMobile( {isLogged, isAdmin, setIsLogged} ) {
 
   return (
     <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
@@ -70,7 +66,7 @@ export default function InsideNavMobile() {
       </ListItem>
       :
       <ListItem disablePadding>
-      <ListItemButton component="a" href="/">
+      <ListItemButton component="a" href="/" onClick={() => { setIsLogged(false)}}>
           <ListItemIcon>
             <LogoutIcon />
           </ListItemIcon>

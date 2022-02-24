@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -9,9 +9,9 @@ import Logo from "../svg/Logo";
 import Link from '@mui/material/Link';
 
 
-export default function NavMobile() {
+export default function NavMobile( {isAdmin, isLogged, setIsLogged} ) {
   
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,7 +49,7 @@ export default function NavMobile() {
               >
 
                 <DialogContent>
-                  <InsideNavMobile />
+                  <InsideNavMobile isLogged={isLogged} isAdmin={isAdmin} setIsLogged={setIsLogged} />
                 </DialogContent>
                 
               </Dialog>

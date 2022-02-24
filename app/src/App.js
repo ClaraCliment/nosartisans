@@ -10,7 +10,6 @@ import Connexion from "./pages/Connexion";
 import Lactu from "./pages/Lactu";
 import Admin from "./pages/Admin";
 import Profil from "./pages/Profil";
-import UserState from './context/UserState';
 import {useState} from 'react';
 
 export default function App() {
@@ -21,15 +20,13 @@ export default function App() {
 
   return (
     <Router>
-      <UserState.Provider value={isAdmin, setIsAdmin, isLogged, setIsLogged, userFirstName, setUserFirstName}> 
       <Box className="App" style={{backgroundColor: "#fcfcfc"}} >
-        
-          <Header />
+          <Header isAdmin={isAdmin} isLogged={isLogged }/>
           <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Home}/>
           <Route path="/artisan:id" component={ArtisanDetails} />
           <Route exact path="/apropos" component={Apropos} />
-          <Route exact path="/connexion" component={Connexion} />
+          <Route exact path="/connexion" component={Connexion} setIsAdmin={setIsAdmin} setIsLogged={setIsLogged} setUserFirstName={setUserFirstName} />
           <Route exact path="/lactu" component={Lactu} />
           <Route exact path="/admin" component={Admin} />
           <Route path="/profil" component={Profil} />
@@ -37,7 +34,6 @@ export default function App() {
           </Switch>
           <Footer />
       </Box>
-      </UserState.Provider>
     </Router>
     
   );

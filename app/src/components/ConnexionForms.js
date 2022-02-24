@@ -43,7 +43,7 @@ function a11yProps(index) {
 
 
 
-export default function ConnexionForms() {
+export default function ConnexionForms( { setIsLogged, setIsAdmin, setUserFirstName } ) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -61,7 +61,7 @@ export default function ConnexionForms() {
         </Tabs>
       </Box >
       <TabPanel value={value} index={0} sx={{width:"100%"}}>
-        <Login />
+        <Login setIsAdmin={setIsAdmin} setIsLogged={setIsLogged} setUserFirstName={setUserFirstName} />
       </TabPanel>
       <TabPanel value={value} index={1} sx={{width:"100%"}}>
         <Inscription />

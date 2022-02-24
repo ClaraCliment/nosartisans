@@ -1,6 +1,11 @@
 const User = require("../models/User");
 const ErrorResponse = require('../utils/errorResponse');
 require('dotenv').config();
+const dayjs = require('dayjs');
+
+
+
+//new Date(Date.now() + process.env.EXPIRE_TOKEN)
 
 exports.signup = async (req, res, next)=>{
 
@@ -50,11 +55,8 @@ exports.signin = async (req, res, next)=>{
         const isMatched = await user.comparePassword(password);
         if (!isMatched){
          
-          return  next(new ErrorResponse('Invalid credentials', 400))
+          return next(new ErrorResponse('Invalid credentials', 400))
         }
-        console.log("Id de l'user: ", user._id)
-        console.log("User complet: ", user)
-        console.log("User email: ", user.email)
         generateToken(user, 200, res);
 
     }
@@ -70,22 +72,21 @@ exports.signin = async (req, res, next)=>{
 const generateToken = async (user, statusCode, res) =>{
 
     const token = await user.jwtGenerateToken();
-
     const firstName = await user.firstName;
+    const admin = await user.admin;
     const lastName = await user.lastName;
     const email = await user.email;
 
-    const options = {
-        httpOnly: true,
-        expires: new Date(new Date().getTime() + process.env.EXPIRE_TOKEN),
-        //expires: new Date(Date.now() + process.env.EXPIRE_TOKEN)
-    };
-
     res
     .status(statusCode)
-    .cookie('token', token, options )
-    .json({success: true, token, firstName, lastName, email})
+    .cookie("usertoken", token, {
+        httpOnly: true,
+        expires: dayjs().add(30, "days").toDate(),
+      })
+    .json({success: true, token, firstName, lastName, admin, email})
     .headers({ 'Content-Type': 'application/json', 'Accept': 'application/json, text/plain', token, firstName, lastName, email})
+
+    res.send("Hello.");
 }
 
 
