@@ -69,11 +69,9 @@ const [signatureHelper, setSignatureHelper] = useState("");
 
     axios.post(`${process.env.REACT_APP_API_URL}/api/articles`,data)
   .then(function (response) {
-    console.log(response);
     window.location.reload();
   })
   .catch(function (error) {
-    console.log(error);
     setSignatureHelper(
       "L'article n'a pas pu être ajouté."
     );

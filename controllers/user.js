@@ -5,6 +5,7 @@ const dayjs = require('dayjs');
 
 
 
+
 //new Date(Date.now() + process.env.EXPIRE_TOKEN)
 
 exports.signup = async (req, res, next)=>{
@@ -57,7 +58,7 @@ exports.signin = async (req, res, next)=>{
          
           return next(new ErrorResponse('Invalid credentials', 400))
         }
-        generateToken(user, 200, res);
+        generateToken(user, 202, res);
 
     }
     catch(error){
@@ -72,21 +73,15 @@ exports.signin = async (req, res, next)=>{
 const generateToken = async (user, statusCode, res) =>{
 
     const token = await user.jwtGenerateToken();
-    const firstName = await user.firstName;
-    const admin = await user.admin;
-    const lastName = await user.lastName;
-    const email = await user.email;
 
     res
     .status(statusCode)
     .cookie("usertoken", token, {
         httpOnly: true,
-        expires: dayjs().add(30, "days").toDate(),
+        expires: dayjs().add(1, "minute").toDate(),
       })
-    .json({success: true, token, firstName, lastName, admin, email})
-    .headers({ 'Content-Type': 'application/json', 'Accept': 'application/json, text/plain', token, firstName, lastName, email})
 
-    res.send("Hello.");
+    res.send("cookie being initialised")
 }
 
 

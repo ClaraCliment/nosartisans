@@ -24,7 +24,6 @@ function GestionArticles() {
     
       if (error) return <ErrorMessage />;
 
-      if(data) console.log(data)
 
 
   return <Box sx={{maxWidth:"600px", mx:"auto"}}>

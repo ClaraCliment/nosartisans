@@ -90,3 +90,8 @@ Définiton trouvée [sur ce site](https://regartisans.economie.fgov.be/regartisa
 # 3/ Mini charte graphique
 
 ![mini charte graphique](https://github.com/ClaraCliment/npProject/blob/main/CharteGraphiqueNosArtisans.png?raw=true)
+
+# Lancer le projet
+
+nodemon server
+cd app : npm start 

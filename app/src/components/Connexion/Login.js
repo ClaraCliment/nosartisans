@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import axios from "axios";
+axios.defaults.withCredentials = true
 
 export default function Login( { setIsLogged, setIsAdmin, setUserFirstName } ) {
 
@@ -23,6 +24,7 @@ export default function Login( { setIsLogged, setIsAdmin, setUserFirstName } ) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(email, password)
     if (password === "") {
       setPasswordError(true);
     }
@@ -33,11 +35,12 @@ export default function Login( { setIsLogged, setIsAdmin, setUserFirstName } ) {
     const data = {
       email: email,
       password: password,
+      withCredentials: true,
     }
 
     axios.post(`${process.env.REACT_APP_API_URL}/api/users/signin`, data)
   .then((response) => {
-    console.log(response.data.admin); 
+    console.log(response); 
     
     
   }
@@ -74,6 +77,7 @@ export default function Login( { setIsLogged, setIsAdmin, setUserFirstName } ) {
   //control format password
   const handlePasswordChange = (e) => {
     setPassword(e);
+
     if (
       e === "" ||
       !e.match(/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]+$/)

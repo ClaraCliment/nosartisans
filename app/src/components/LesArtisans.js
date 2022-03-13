@@ -59,7 +59,6 @@ export default function LesArtisans() {
     (async function(){
       let data = await fetch(api)
       .then(res => res.json());
-      console.log(data);
       setFetchedData(data);
     })()
   }, [api])

@@ -25,18 +25,10 @@ mongoose.connect( process.env.MONGODB_URI || connexion,
  
 const app = express();
 
-// Tout le monde a accès à l'API
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  next();
-});
-
 app.set('trust proxy', 1)
   app.use(
     cors({
-      origin: "*",
+      origin: "http://localhost:3000",
       credentials: true,
     })
   );
@@ -45,6 +37,16 @@ app.set('trust proxy', 1)
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(cookieParser());
+
+//Tout le monde a accès à l'API
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  next();
+});
+
 
 
 app.use('/api/artisans', artisanRoutes);
